@@ -7,29 +7,30 @@ import unittest
 from selenium import webdriver
 
 from POM.elementLocatorCart import cartPage
+from POM.dataCart import inputanCart
 
 class demoBlazeTest(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.url="https://www.demoblaze.com/"
+        self.url=inputanCart.url
     
     def test_cart_with_logins(self):
         driver = self.driver #buka web browser
         driver.get(self.url) # buka situs
         driver.maximize_window()
         # driver.find_element(By.ID,"login2").click()
-        # driver.find_element(By.XPATH("//input[@id='loginusername']")).send_keys("cek12345@gmail.com")
-        # driver.find_element(By.ID,"loginpassword").send_keys("cek12345")
+        # driver.find_element(By.XPATH("//input[@id='loginusername']")).send_keys(inputanCart.username)
+        # driver.find_element(By.ID,"loginpassword").send_keys(inputanCart.password)
         # driver.find_element(By.CLASS_NAME,"btn btn-primary").click()
         login=driver.find_element(*cartPage.idLoginPage)
         WebDriverWait(driver,5).until(EC.element_to_be_clickable(login))
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
@@ -52,10 +53,10 @@ class demoBlazeTest(unittest.TestCase):
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Phones"))).click()
@@ -66,7 +67,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added.", successMessage)
+        self.assertEqual(inputanCart.productAddWithLogin, successMessage)
 
     def test_add_to_cart_without_login(self):
         driver = self.driver #buka web browser
@@ -80,7 +81,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added", successMessage)
+        self.assertEqual(inputanCart.productAddWithoutLoign, successMessage)
     
     def test_add_more_than_one_with_login(self):
         driver = self.driver #buka web browser
@@ -91,10 +92,10 @@ class demoBlazeTest(unittest.TestCase):
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkSamsung))).click()
@@ -104,7 +105,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added.", successMessage)
+        self.assertEqual(inputanCart.productAddWithLogin, successMessage)
         driver.find_element(*cartPage.linkHome).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((cartPage.linkNokia))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
@@ -113,7 +114,7 @@ class demoBlazeTest(unittest.TestCase):
         message = alert2.text
         print(alert2.text)
         alert.accept()
-        self.assertEqual("Product added.", message)
+        self.assertEqual(inputanCart.productAddWithLogin, message)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
 
     def test_add_more_than_one_without_login(self):
@@ -127,7 +128,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added", successMessage)
+        self.assertEqual(inputanCart.productAddWithoutLoign, successMessage)
         driver.find_element(*cartPage.linkHome).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((cartPage.linkNokia))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
@@ -136,7 +137,7 @@ class demoBlazeTest(unittest.TestCase):
         message = alert2.text
         print(alert2.text)
         alert.accept()
-        self.assertEqual("Product added", message)
+        self.assertEqual(inputanCart.productAddWithoutLoign, message)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
 
     def test_delete_one_with_login(self):
@@ -148,10 +149,10 @@ class demoBlazeTest(unittest.TestCase):
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkSamsung))).click()
@@ -161,7 +162,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added.", successMessage)
+        self.assertEqual(inputanCart.productAddWithLogin, successMessage)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
@@ -177,7 +178,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added", successMessage)
+        self.assertEqual(inputanCart.productAddWithoutLoign, successMessage)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
@@ -193,7 +194,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added", successMessage)
+        self.assertEqual(inputanCart.productAddWithoutLoign, successMessage)
         driver.find_element(*cartPage.linkHome).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((cartPage.linkNokia))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
@@ -202,7 +203,7 @@ class demoBlazeTest(unittest.TestCase):
         message = alert2.text
         print(alert2.text)
         alert.accept()
-        self.assertEqual("Product added", message)
+        self.assertEqual(inputanCart.productAddWithoutLoign, message)
         driver.find_element(*cartPage.linkHome).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((cartPage.linkNexus))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
@@ -211,13 +212,13 @@ class demoBlazeTest(unittest.TestCase):
         message3 = alert3.text
         print(alert3.text)
         alert.accept()
-        self.assertEqual("Product added", message3)
+        self.assertEqual(inputanCart.productAddWithoutLoign, message3)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkHome).click()
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Cart"))).click()
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
         time.sleep(2)
@@ -227,7 +228,7 @@ class demoBlazeTest(unittest.TestCase):
         driver.find_element(*cartPage.linkDelete).click()
         time.sleep(2)
         aftercountofcart = driver.find_elements(*cartPage.linkDelete)
-        print("sisa produk: ", len(aftercountofcart))
+        print(inputanCart.sisaProduk, len(aftercountofcart))
 
     def test_delete_more_than_one_with_login(self):
         driver = self.driver #buka web browser
@@ -238,10 +239,10 @@ class demoBlazeTest(unittest.TestCase):
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkSamsung))).click()
@@ -251,7 +252,7 @@ class demoBlazeTest(unittest.TestCase):
         successMessage=alert.text
         print(alert.text)
         alert.accept()
-        self.assertEqual("Product added.", successMessage)
+        self.assertEqual(inputanCart.productAddWithLogin, successMessage)
         driver.find_element(*cartPage.linkHome).click()
         WebDriverWait(driver,10).until(EC.presence_of_element_located((cartPage.linkNokia))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
@@ -260,7 +261,7 @@ class demoBlazeTest(unittest.TestCase):
         message = alert2.text
         print(alert2.text)
         alert.accept()
-        self.assertEqual("Product added.", message)
+        self.assertEqual(inputanCart.productAddWithLogin, message)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
@@ -280,10 +281,10 @@ class demoBlazeTest(unittest.TestCase):
         login.click()
         username=driver.find_element(*cartPage.idUsername)
         WebDriverWait(driver,5).until(EC.visibility_of(username))
-        username.send_keys("cek12345@gmail.com")
+        username.send_keys(inputanCart.username)
         password=driver.find_element(*cartPage.idPassword)
         WebDriverWait(driver,5).until(EC.visibility_of(password))
-        password.send_keys("cek12345")
+        password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
@@ -291,6 +292,26 @@ class demoBlazeTest(unittest.TestCase):
         driver.find_element(*cartPage.linkDelete).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkHome).click()
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
+        time.sleep(2)
+        driver.find_element(*cartPage.linkDelete).click()
+        time.sleep(2)
+
+    def test_delete_one_with_login_without_add_product(self):
+        driver = self.driver #buka web browser
+        driver.get(self.url) # buka situs
+        driver.maximize_window()
+        login=driver.find_element(*cartPage.idLoginPage)
+        WebDriverWait(driver,5).until(EC.element_to_be_clickable(login))
+        login.click()
+        username=driver.find_element(*cartPage.idUsername)
+        WebDriverWait(driver,5).until(EC.visibility_of(username))
+        username.send_keys(inputanCart.username)
+        password=driver.find_element(*cartPage.idPassword)
+        WebDriverWait(driver,5).until(EC.visibility_of(password))
+        password.send_keys(inputanCart.password)
+        driver.find_element(*cartPage.buttonLogin).click()
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
         time.sleep(2)
         driver.find_element(*cartPage.linkDelete).click()
