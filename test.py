@@ -2,10 +2,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
 import unittest
 from selenium import webdriver
-
 from POM.elementLocatorCart import cartPage
 from POM.dataCart import inputanCart
 
@@ -18,10 +16,6 @@ class demoBlazeTest(unittest.TestCase):
         driver = self.driver #buka web browser
         driver.get(self.url) # buka situs
         driver.maximize_window()
-        # driver.find_element(By.ID,"login2").click()
-        # driver.find_element(By.XPATH("//input[@id='loginusername']")).send_keys(inputanCart.username)
-        # driver.find_element(By.ID,"loginpassword").send_keys(inputanCart.password)
-        # driver.find_element(By.CLASS_NAME,"btn btn-primary").click()
         login=driver.find_element(*cartPage.idLoginPage)
         WebDriverWait(driver,5).until(EC.element_to_be_clickable(login))
         login.click()
@@ -34,9 +28,6 @@ class demoBlazeTest(unittest.TestCase):
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
-        # cart=driver.find_element(By.ID,"cartur")
-        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable(cart))
-        # cart.click()
 
     def test_cart_without_login(self):
         driver=self.driver
@@ -59,7 +50,6 @@ class demoBlazeTest(unittest.TestCase):
         password.send_keys(inputanCart.password)
         driver.find_element(*cartPage.buttonLogin).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkLogout)))#untuk bantuan,tidak ada fungsi click
-        # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Phones"))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkSamsung))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
         WebDriverWait(driver, 5).until(EC.alert_is_present())
@@ -73,7 +63,6 @@ class demoBlazeTest(unittest.TestCase):
         driver = self.driver #buka web browser
         driver.get(self.url) # buka situs
         driver.maximize_window()
-        # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Phones"))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkSamsung))).click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkAddToCart))).click()
         WebDriverWait(driver, 5).until(EC.alert_is_present())
