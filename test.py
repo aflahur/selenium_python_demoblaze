@@ -58,6 +58,7 @@ class demoBlazeTest(unittest.TestCase):
         print(alert.text)
         alert.accept()
         self.assertEqual(inputanCart.productAddWithLogin, successMessage)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
 
     def test_add_to_cart_without_login(self):
         driver = self.driver #buka web browser
@@ -71,6 +72,7 @@ class demoBlazeTest(unittest.TestCase):
         print(alert.text)
         alert.accept()
         self.assertEqual(inputanCart.productAddWithoutLoign, successMessage)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((cartPage.linkCartPage))).click()
     
     def test_add_more_than_one_with_login(self):
         driver = self.driver #buka web browser
